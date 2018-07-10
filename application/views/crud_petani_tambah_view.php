@@ -43,20 +43,16 @@
 
 							<label class="control-label col-sm-2" for="title">PROVINSI:</label>
 							<div class="col-sm-10">
-							<select name="provinsi" class="form-control" >
+							<select name="provinsi" class="form-control" id="provinsi" >
 
-								<option value="">--- Select State ---</option>
+								<!--<option value="">--- Select Provinsi ---</option>-->
 
-								<?php
-
-									foreach ($provinsi as $key => $value) {
-
-										echo "<option value='".$value->IDprovinsi."'>".$value->name."</option>";
-
+								<?php 
+									foreach($provinsi as $prov)
+									{
+										echo '<option value="'.$prov->IDprovinsi.'">'.$prov->nama.'</option>';
 									}
-
 								?>
-
 							</select>
 							</div>
 						</div>						  
@@ -77,8 +73,8 @@
 
 							<label class="control-label col-sm-2" for="title">KABUPATEN:</label>
 							<div class="col-sm-10">
-								<select name="kabupaten" class="form-control" >
-
+								<select name="kabkota" class="form-control" id="kabkota">
+									<!--<option value=''>Select Kabupaten</option>-->
 								</select>
 							</div>
 						</div>						 
@@ -86,15 +82,44 @@
 						  <div class="form-group">
 							<label class="control-label col-sm-2" for="kecamatan">KECAMATAN :</label>
 							<div class="col-sm-10">
-							  <input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="Enter kecamatan">
+								<select name="kecamatan" class="form-control" id="kecamatan">
+									<!--<option value=''>Select Kecamatan</option>-->
+								</select>
 							</div>
 						  </div>
 						  <div class="form-group">
 							<label class="control-label col-sm-2" for="desa">DESA :</label>
 							<div class="col-sm-10">
-							  <input type="text" class="form-control" id="desa" name="desa" placeholder="Enter desa">
+								<select name="desa" class="form-control" id="desa">
+									<!--<option value=''>Select Desa</option>-->
+								</select>
 							</div>
 						  </div>
+						  
+<!-- Sumber B 
+						  
+						  		<p>Provinsi :</p>
+		<select name="prov" class="form-control" id="provinsi">
+			<option>- Select Provinsi -</option>
+			
+		</select>
+		<p>Kabupaten :</p>
+		<select name="kab" class="form-control" id="kabupaten">
+			<option value=''>Select Kabupaten</option>
+		</select>
+		<p>Kecamatan :</p>
+		<select name="kec" class="form-control" id="kecamatan">
+			<option>Select Kecamatan</option>
+		</select>
+		<p>Desa :</p>
+		<select name="des" class="form-control" id="desa">
+			<option>Select Desa</option>
+		</select>
+		<hr>
+						  
+ /Sumber B-->
+						  
+						  
 						  <div class="form-group">
 							<label class="control-label col-sm-2" for="tglmasuk">TANGGAL MASUK :</label>
 							<div class="col-sm-10">
@@ -144,8 +169,38 @@
 	</div>
   <!-- /.content-wrapper -->
   
+
   
-  <script type="text/javascript">
+  <!-- Sumber wilayah_view.php -->
+  
+  		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<script>
+        	$(document).ready(function(){
+	            $("#provinsi").change(function (){
+	                var url = "<?php echo site_url('crud_petani/add_ajax_kab');?>/"+$(this).val();
+	                $('#kabkota').load(url);
+					
+	                return false;
+	            })
+	   
+	   			$("#kabkota").change(function (){
+	                var url = "<?php echo site_url('crud_petani/add_ajax_kec');?>/"+$(this).val();
+	                $('#kecamatan').load(url);
+	                return false;
+	            })
+	   
+	   			$("#kecamatan").change(function (){
+	                var url = "<?php echo site_url('crud_petani/add_ajax_des');?>/"+$(this).val();
+	                $('#desa').load(url);
+	                return false;
+	            })
+	        });
+    	</script>
+
+  
+  <!-- /Sumber wilayah_view.php -->
+
+  <!--<script type="text/javascript">
 
 
     $(document).ready(function() {
@@ -189,6 +244,7 @@
     });
 
 </script>
+-->
 
 
   <?php $this->load->view('template/footer'); ?>

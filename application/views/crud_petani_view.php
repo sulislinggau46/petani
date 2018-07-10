@@ -85,6 +85,10 @@
     <!-- /.content -->
 	</div>
   <!-- /.content-wrapper -->
+  
+  
+  
+  
 
 
   <?php $this->load->view('template/footer'); ?>

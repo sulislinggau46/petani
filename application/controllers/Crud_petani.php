@@ -6,26 +6,120 @@ class Crud_petani extends CI_Controller{
 		parent::__construct();		
 		$this->load->model('Crud_petani_model');
         $this->load->helper('url');
-		$this->load->database(); //sumber: A. (https://itsolutionstuff.com/post/codeigniter-dynamic-dependent-dropdown-using-jquery-ajax-exampleexample.html)
+		//$this->load->database(); //sumber: A. (https://itsolutionstuff.com/post/codeigniter-dynamic-dependent-dropdown-using-jquery-ajax-exampleexample.html)
 	}
+ 
+/*	
+sumber: B (http://www.kang-cahya.com/2016/09/dropdown-select-data-wilayah-seluruh.html)
+
+	function index()
+	{
+		$get_prov = $this->db->select('*')->from('wilayah_provinsi')->get();
+   		$data['provinsi'] = $get_prov->result();
+   		$data['path'] = base_url('assets');   
+   		$this->load->view('wilayah_view', $data);
+  	}
+  
+	function add_ajax_kab($id_prov)
+	{
+    	$query = $this->db->get_where('wilayah_kabupaten',array('provinsi_id'=>$id_prov));
+    	$data = "<option value=''>- Select Kabupaten -</option>";
+    	foreach ($query->result() as $value) {
+        	$data .= "<option value='".$value->id."'>".$value->nama."</option>";
+    	}
+    	echo $data;
+	}
+  
+	function add_ajax_kec($id_kab)
+	{
+    	$query = $this->db->get_where('wilayah_kecamatan',array('kabupaten_id'=>$id_kab));
+    	$data = "<option value=''> - Pilih Kecamatan - </option>";
+    	foreach ($query->result() as $value) {
+        	$data .= "<option value='".$value->id."'>".$value->nama."</option>";
+    	}
+    	echo $data;
+	}
+  
+	function add_ajax_des($id_kec)
+	{
+    	$query = $this->db->get_where('wilayah_desa',array('kecamatan_id'=>$id_kec));
+    	$data = "<option value=''> - Pilih Desa - </option>";
+    	foreach ($query->result() as $value) {
+        	$data .= "<option value='".$value->id."'>".$value->nama."</option>";
+    	}
+    	echo $data;
+	}  */
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 	function index(){
 		$data['petani'] = $this->Crud_petani_model->tampil_data()->result();
 		$this->load->view('crud_petani_view',$data);
-		    
-			$provinsi = $this->db->get("provinsi")->result();//sumber: A.
-			$this->load->view('crud_petani_view', array('provinsi' => $provinsi )); //sumber: A. 
+		
+		
+		
+   
+		//	$provinsi = $this->db->get("provinsi")->result();//sumber: A.
+		//	$this->load->view('crud_petani_view', array('provinsi' => $provinsi )); //sumber: A. 
+	}
+
+
+
+	
+	function add_ajax_kab($id_prov) //sumber B:
+	{
+    	$query = $this->db->get_where('kabkota',array('IDprovinsi'=>$id_prov));
+    	$data = "<option value=''>- Select Kabupaten -</option>";
+    	foreach ($query->result() as $value) {
+        	$data .= "<option value='".$value->IDkabkota."'>".$value->nama."</option>";
+    	}
+    	echo $data;
+	}
+
+	function add_ajax_kec($id_kab)
+	{
+    	$query = $this->db->get_where('kecamatan',array('IDkabkota'=>$id_kab));
+    	$data = "<option value=''> - Pilih Kecamatan - </option>";
+    	foreach ($query->result() as $value) {
+        	$data .= "<option value='".$value->IDkecamatan."'>".$value->nama."</option>";
+    	}
+    	echo $data;
 	}
 	
-	public function myformAjax($IDkabkota) { //sumber: A
+	function add_ajax_des($id_kec)
+	{
+    	$query = $this->db->get_where('desa',array('IDkecamatan'=>$id_kec));
+    	$data = "<option value=''> - Pilih Desa - </option>";
+    	foreach ($query->result() as $value) {
+        	$data .= "<option value='".$value->IDdesa."'>".$value->nama."</option>";
+    	}
+    	echo $data;
+	}
+	
+/*	public function myformAjax($IDkabkota) { //sumber: A
 
        $result = $this->db->where("IDprovinsi",$IDkabkota)->get("kabkota")->result();
        echo json_encode($result);
 
-   }
+   } */
 	
 	function tambah() {
-		$this->load->view('crud_petani_tambah_view');
+		$get_prov = $this->db->select('*')->from('provinsi')->get();//sumber: B
+   		$data['provinsi'] = $get_prov->result();
+   		$data['path'] = base_url('assets');   
+   		$this->load->view('crud_petani_tambah_view', $data);
+
+		//$this->load->view('crud_petani_tambah_view');
 	}
 		
 	function tambah_aksi(){

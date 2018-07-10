@@ -24,4 +24,12 @@ class Crud_petani_model extends CI_Model{
 		$this->db->update($table,$data);
 	}	
 	
+	function get_all_provinsi() {
+	$this->db->select('*');
+	$this->db->from('provinsi');
+	$query = $this->db->get();
+	   
+	return $query->result();
+	}
+
 }
